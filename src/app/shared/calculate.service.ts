@@ -1,9 +1,9 @@
 import {Injectable} from "@angular/core";
 import {Subject} from "rxjs/Subject";
-import {creditRatesBase} from './creditRatesBase.json';
-import {creditRatesSocial} from './creditRatesSocial.json';
-import {creditRatesBaseRuling} from './creditRatesBaseRuling.json';
-import {creditRatesSocialRuling} from './creditRatesSocialRuling.json';
+//import {creditRatesBase} from './creditRatesBase.json';
+//import {creditRatesSocial} from './creditRatesSocial.json';
+//import {creditRatesBaseRuling} from './creditRatesBaseRuling.json';
+//import {creditRatesSocialRuling} from './creditRatesSocialRuling.json';
 
 type InputParams = {
   grossYear: number,
@@ -41,7 +41,8 @@ export class CalculateService {
           netYear: 0,
           netMonth: 0,
           incomeTax: 0
-        };
+        },
+        netYear = 0;
       if(input.allowance){
         grossYear = input.grossYear / 1.08;  //-8%
       }
@@ -50,12 +51,12 @@ export class CalculateService {
       if(input.ruling){
         taxableYear = taxableYear * 0.7;
       }
-      output.generalCredit = this.getCredits(grossYear, input.ruling, input.socialSecurity).lk;
-      output.labourCredit = this.getCredits(grossYear, input.ruling, input.socialSecurity).ak;
+      //output.generalCredit = this.getCredits(grossYear, input.ruling, input.socialSecurity).lk;
+      //output.labourCredit = this.getCredits(grossYear, input.ruling, input.socialSecurity).ak;
       output.grossMonth = ~~(grossYear / 12);
-      output.netYear = grossYear - this.getTaxAmount(taxableYear, input.age, input.socialSecurity, input.year);
-      output.netYear += input.generalCredit + input.labourCredit;
-      output.netMonth = ~~(input.netYear / 12);
+      netYear = grossYear - this.getTaxAmount(taxableYear, input.age, input.socialSecurity, input.year);
+      //netYear += input.generalCredit + input.labourCredit;
+      output.netMonth = ~~(netYear / 12);
       output.incomeTax = this.getTaxAmount(taxableYear, input.age, input.socialSecurity, input.year);
 
       CalculateService._outputSubject.next(output);
@@ -135,30 +136,30 @@ export class CalculateService {
     return taxAmount;
   }
 
-  getCredits(salary, ruling, socialSecurity) {
-    let index,
-      currentRates = creditRatesBase;
-
-    if (!socialSecurity) {
-      if (!ruling) {
-        currentRates = creditRatesBase;
-      } else {
-        currentRates = creditRatesBaseRuling;
-      }
-    } else {
-      if (!ruling) {
-        currentRates = creditRatesSocial;
-      } else {
-        currentRates = creditRatesSocialRuling;
-      }
-    }
-
-    for (index = 0; index < currentRates.length; index++) {
-      if (currentRates[index].salary > salary) {
-        break;
-      }
-    }
-    return index ? currentRates[index - 1] : currentRates[0];
-  }
+  // getCredits(salary, ruling, socialSecurity) {
+  //   let index,
+  //     currentRates = creditRatesBase;
+  //
+  //   if (!socialSecurity) {
+  //     if (!ruling) {
+  //       currentRates = creditRatesBase;
+  //     } else {
+  //       currentRates = creditRatesBaseRuling;
+  //     }
+  //   } else {
+  //     if (!ruling) {
+  //       currentRates = creditRatesSocial;
+  //     } else {
+  //       currentRates = creditRatesSocialRuling;
+  //     }
+  //   }
+  //
+  //   for (index = 0; index < currentRates.length; index++) {
+  //     if (currentRates[index].salary > salary) {
+  //       break;
+  //     }
+  //   }
+  //   return index ? currentRates[index - 1] : currentRates[0];
+  // }
 
 }
