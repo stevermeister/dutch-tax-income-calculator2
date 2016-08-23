@@ -15,13 +15,8 @@ export class ResultsOutputComponent implements OnInit {
   constructor(_calculateService: CalculateService) {
     this._calculateService = _calculateService;
     this._calculateService.calculateResult.subscribe(results=> {
-      this.results = [];
-      this.results.push({key: 'generalCredit', value: results['generalCredit']});
-      this.results.push({key: 'labourCredit', value: results['labourCredit']});
-      this.results.push({key: 'grossMonth', value: results['grossMonth']});
-      this.results.push({key: 'netYear', value: results['netYear']});
-      this.results.push({key: 'netMonth', value: results['netMonth']});
-      this.results.push({key: 'incomeTax', value: results['incomeTax']});
+      console.log(results.netYear)
+      this.results = results;
     })
   }
 

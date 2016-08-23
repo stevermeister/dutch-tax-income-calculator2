@@ -50,9 +50,9 @@ export class CalculateService {
       output.generalCredit = this.getCredits(grossYear, input.ruling, input.socialSecurity).lk;
       output.labourCredit = this.getCredits(grossYear, input.ruling, input.socialSecurity).ak;
       output.grossMonth = ~~(grossYear / 12);
-      netYear = grossYear - this.getTaxAmount(taxableYear, input.age, input.socialSecurity);
-      netYear += output.generalCredit + output.labourCredit;
-      output.netMonth = ~~(netYear / 12);
+      output.netYear = grossYear - this.getTaxAmount(taxableYear, input.age, input.socialSecurity);
+      output.netYear += output.generalCredit + output.labourCredit;
+      output.netMonth = ~~(output.netYear / 12);
       output.incomeTax = this.getTaxAmount(taxableYear, input.age, input.socialSecurity);
 
       CalculateService._outputSubject.next(output);
