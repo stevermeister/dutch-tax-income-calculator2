@@ -1,3 +1,21 @@
-<md-input placeholder="amount" align="end" (input)="setIncome($event.target.value)">
+<md-input placeholder="amount" align="end" (input)="changeOption('income',$event.target.value)" [value]="options.income">
   <span md-prefix>€&nbsp;</span>
 </md-input>
+
+<ul>
+  <li>
+    <md-checkbox [checked]="options.allowance" (change)="changeOption('allowance',$event.checked)">
+      {{'allowance_label'| translate}}
+    </md-checkbox>
+  </li>
+  <li>
+    <md-checkbox [checked]="options.age" (change)="changeOption('age',$event.checked)">{{'age_label'| translate}}</md-checkbox>
+  </li>
+  <li>
+    <md-checkbox [checked]="options.socialSecurity" (change)="changeOption('socialSecurity',$event.checked)">{{'socialSecurity_label'| translate}}
+    </md-checkbox>
+  </li>
+  <li>
+    <md-checkbox [checked]="options.ruling" (change)="changeOption('ruling',$event.checked)">{{'ruling_label'| translate}}</md-checkbox>
+  </li>
+</ul>

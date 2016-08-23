@@ -1,3 +1,8 @@
-<p>
-  results-output works!
-</p>
+<md-list>
+  <md-list-item *ngFor="let result of results">
+    <h3 md-line> {{result.value}} </h3>
+    <p md-line>
+      <span class="demo-2"> -- {{result.key}} </span>
+    </p>
+  </md-list-item>
+</md-list>
