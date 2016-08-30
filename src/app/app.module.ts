@@ -6,6 +6,8 @@ import {FormsModule} from "@angular/forms";
 import {AppComponent} from "./app.component";
 import {MdInputModule} from "@angular2-material/input";
 import {MdButtonModule} from "@angular2-material/button";
+import {MdButtonToggleModule} from "@angular2-material/button-toggle";
+import {MdTabsModule} from "@angular2-material/tabs";
 import {MdListModule} from "@angular2-material/list";
 import {MdCheckboxModule} from "@angular2-material/checkbox";
 import {MdRadioModule} from "@angular2-material/radio";
@@ -22,9 +24,11 @@ import {ResultsOutputComponent} from "./results-output/results-output.component"
   imports: [
     MdInputModule,
     MdButtonModule,
+    MdButtonToggleModule,
     MdListModule,
     MdCheckboxModule,
     MdRadioModule,
+    MdTabsModule,
     TranslateModule.forRoot(),
     BrowserModule,
     CommonModule,

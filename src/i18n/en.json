@@ -2,5 +2,7 @@
   "allowance_label": "Holiday allowance included",
   "age_label": "I'm 65 years old",
   "socialSecurity_label": "Social security",
-  "ruling_label": "I have 30% ruling"
+  "ruling_label": "I have 30% ruling",
+  "tab_gross_year": "Gross year",
+  "tab_net_month": "Net month"
 }

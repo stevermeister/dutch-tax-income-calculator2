@@ -12,15 +12,16 @@ export class ResultsOutputComponent implements OnInit {
   private _calculateService: CalculateService;
   public results: any;
 
+
   constructor(_calculateService: CalculateService) {
     this._calculateService = _calculateService;
-    this._calculateService.calculateResult.subscribe(results=> {
-      console.log(results.netYear)
-      this.results = results;
-    })
   }
 
   ngOnInit() {
+    this._calculateService.calculateResult.subscribe(results=> {
+      console.log(results)
+      this.results = results;
+    })
   }
 
 

@@ -1,2 +1,22 @@
-<app-input-income></app-input-income>
+<md-tab-group>
+  <md-tab>
+    <template md-tab-label>{{'tab_gross_year'| translate}}</template>
+    <template md-tab-content>
+      <app-input-income [incomeType]="'gross_year'"></app-input-income>
+    </template>
+  </md-tab>
+  <md-tab>
+    <template md-tab-label>{{'tab_net_month'| translate}}</template>
+    <template md-tab-content>
+      <app-input-income [incomeType]="'net_month'"></app-input-income>
+    </template>
+  </md-tab>
+</md-tab-group>
 <app-results-output></app-results-output>
+<mdbutton></mdbutton>
+<md-button-toggle-group>
+  <md-button-toggle (click)="changeLang('en')">EN</md-button-toggle>
+  <md-button-toggle value="true" (click)="changeLang('ru')">RU</md-button-toggle>
+</md-button-toggle-group>
+
+

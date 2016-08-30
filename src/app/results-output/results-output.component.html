@@ -1,4 +1,4 @@
-<md-list>
+<md-list *ngIf="results">
   <md-list-item><h3 md-line> NO </h3><p md-line><span class="demo-2">Taxable Income</span></p></md-list-item>
   <md-list-item><h3 md-line> {{results.incomeTax}} </h3><p md-line><span class="demo-2">Income Tax</span></p></md-list-item>
   <md-list-item><h3 md-line> {{results.generalCredit}} </h3><p md-line><span class="demo-2">General Tax Credit</span></p></md-list-item>

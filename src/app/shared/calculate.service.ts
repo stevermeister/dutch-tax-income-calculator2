@@ -10,7 +10,8 @@ type InputParams = {
   allowance: boolean,
   ruling: boolean,
   socialSecurity: boolean,
-  age: boolean
+  age: boolean,
+  type:string
 };
 
 type OutputParams = {
@@ -30,30 +31,41 @@ export class CalculateService {
 
   constructor() {
     CalculateService._inputSubject.subscribe(input=> {
-      let grossYear = +input.income || 0,
-        output: OutputParams = {
+
+      let output: OutputParams = {
           generalCredit: 0,
           labourCredit: 0,
           grossMonth: 0,
           netYear: 0,
           netMonth: 0,
           incomeTax: 0
-        },
-        netYear = 0;
-      if (input.allowance) {
-        grossYear = +input.income / 1.08;  //-8%
+        };
+
+      if(input.type === 'gross_year'){
+        let grossYear = +input.income || 0;
+        if (input.allowance) {
+          grossYear = +input.income / 1.08;  //-8%
+        }
+        let taxableYear = grossYear;
+        if (input.ruling) {
+          taxableYear = taxableYear * 0.7;
+        }
+        output.generalCredit = this.getCredits(grossYear, input.ruling, input.socialSecurity).lk;
+        output.labourCredit = this.getCredits(grossYear, input.ruling, input.socialSecurity).ak;
+        output.grossMonth = ~~(grossYear / 12);
+        output.netYear = grossYear - this.getTaxAmount(taxableYear, input.age, input.socialSecurity);
+        output.netYear += output.generalCredit + output.labourCredit;
+        output.netMonth = ~~(output.netYear / 12);
+        output.incomeTax = this.getTaxAmount(taxableYear, input.age, input.socialSecurity);
+      } else {
+        output.netMonth = +input.income || 0;
+        output.netYear = output.netMonth * 12;
+        output.generalCredit = 0;
+        output.labourCredit = 0;
+        output.grossMonth = 0;
+        output.incomeTax = 0;
       }
-      let taxableYear = grossYear;
-      if (input.ruling) {
-        taxableYear = taxableYear * 0.7;
-      }
-      output.generalCredit = this.getCredits(grossYear, input.ruling, input.socialSecurity).lk;
-      output.labourCredit = this.getCredits(grossYear, input.ruling, input.socialSecurity).ak;
-      output.grossMonth = ~~(grossYear / 12);
-      output.netYear = grossYear - this.getTaxAmount(taxableYear, input.age, input.socialSecurity);
-      output.netYear += output.generalCredit + output.labourCredit;
-      output.netMonth = ~~(output.netYear / 12);
-      output.incomeTax = this.getTaxAmount(taxableYear, input.age, input.socialSecurity);
+
 
       CalculateService._outputSubject.next(output);
     })
