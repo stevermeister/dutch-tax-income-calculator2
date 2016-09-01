@@ -1,8 +1,8 @@
 <md-list *ngIf="results">
-  <md-list-item><h3 md-line> NO </h3><p md-line><span class="demo-2">Taxable Income</span></p></md-list-item>
-  <md-list-item><h3 md-line> {{results.incomeTax}} </h3><p md-line><span class="demo-2">Income Tax</span></p></md-list-item>
-  <md-list-item><h3 md-line> {{results.generalCredit}} </h3><p md-line><span class="demo-2">General Tax Credit</span></p></md-list-item>
-  <md-list-item><h3 md-line> {{results.labourCredit}} </h3><p md-line><span class="demo-2">Labour Tax Credit</span></p></md-list-item>
-  <md-list-item><h3 md-line> {{results.netYear}} </h3><p md-line><span class="demo-2">Year net income</span></p></md-list-item>
-  <md-list-item><h3 md-line> {{results.netMonth}} </h3><p md-line><span class="demo-2">Monthly net income</span></p></md-list-item>
+  <md-list-item><h3 md-line> NO </h3><p md-line><span class="demo-2">{{'OUTPUT_TAXABLE_INCOME'|translate}}</span></p></md-list-item>
+  <md-list-item><h3 md-line> {{results.incomeTax}} </h3><p md-line><span class="demo-2">{{'OUTPUT_INCOME_TAX'|translate}}</span></p></md-list-item>
+  <md-list-item><h3 md-line> {{results.generalCredit}} </h3><p md-line><span class="demo-2">{{'OUTPUT_GENERAL_TAX_CREDIT'|translate}}</span></p></md-list-item>
+  <md-list-item><h3 md-line> {{results.labourCredit}} </h3><p md-line><span class="demo-2">{{'OUTPUT_LABOUR_TAX_CREDIT'|translate}}</span></p></md-list-item>
+  <md-list-item><h3 md-line> {{results.netYear}} </h3><p md-line><span class="demo-2">{{'OUTPUT_YEAR_NET_INCOME'|translate}}</span></p></md-list-item>
+  <md-list-item><h3 md-line> {{results.netMonth}} </h3><p md-line><span class="demo-2">{{'OUTPUT_MONTHLY_NET_INCOME'|translate}}</span></p></md-list-item>
 </md-list>

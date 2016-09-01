@@ -1,12 +1,14 @@
 import {Component, OnInit} from "@angular/core";
 import {CalculateService} from "../shared/calculate.service";
+import {TranslatePipe} from "ng2-translate";
 
 @Component({
   selector: 'app-results-output',
   templateUrl: 'results-output.component.html',
   styleUrls: ['results-output.component.css'],
   providers: [CalculateService],
-  host:{'background-color':'red'}
+  host:{'background-color':'red'},
+  pipes: [TranslatePipe]
 })
 export class ResultsOutputComponent implements OnInit {
   private _calculateService: CalculateService;
