@@ -22,7 +22,6 @@ type OutputParams = {
 export class CalculateService {
   private static _inputSubject: Subject<InputParams> = new Subject();
   private static _outputSubject: Subject<OutputParams> = new Subject();
-  private static output = {};
 
   constructor() {
     CalculateService._inputSubject.subscribe(input=> {
@@ -71,40 +70,19 @@ export class CalculateService {
     CalculateService._inputSubject.next(value);
   }
 
-
   public get calculateResult() {
     return CalculateService._outputSubject;
   }
 
+  getTaxAmount(taxableIncome = 0) {
 
-  getTaxRates() {
-    let taxRates = {
-      2016: {
-        normal: [.3655, .404, .404, .52],
-        withoutSocial: [.0835, .1385, .404, .52],
-        over64: [0.1860, 0.2250, .404, .52]
-      },
-    }, currentTaxRates = taxRates[2016]['normal'];
-
-    return currentTaxRates;
-  }
-
-  getTaxAmountPeriods() {
-    const taxAmountPeriods = {
-      2016: [
+    const taxAmountPeriods = [
         19922, // 0 - 19,922
         13793, // 33,715 - 19,922
         32697, // 66,421 - 33,715
         Infinity
-      ],
-    };
-
-    return taxAmountPeriods[2016];
-  }
-
-  getTaxAmount(taxableIncome = 0) {
-    const taxAmountPeriods = this.getTaxAmountPeriods();
-    const taxRates = this.getTaxRates();
+      ];
+    let taxRates = [.3655, .404, .404, .52];
     let taxAmount = 0;
 
     for (let i = 0; i < taxRates.length; i++) {
