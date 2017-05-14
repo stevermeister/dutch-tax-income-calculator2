@@ -1,0 +1,9 @@
+<md-list *ngIf="results">
+  <md-list-item><h3 md-line> {{results.taxableYear}}  </h3><p md-line><span class="demo-2">{{'OUTPUT.TAXABLE_YEAR'|translate}}</span></p></md-list-item>
+  <md-list-item><h3 md-line> {{results.incomeTax}} </h3><p md-line><span class="demo-2">{{'OUTPUT.PAYROLL_TAX'|translate}}</span></p></md-list-item>
+  <md-list-item><h3 md-line> {{results.incomeTax}} </h3><p md-line><span class="demo-2">{{'OUTPUT.SOCIAL_TAX'|translate}}</span></p></md-list-item>
+  <md-list-item><h3 md-line> {{results.generalCredit}} </h3><p md-line><span class="demo-2">{{'OUTPUT.GENERAL_CREDIT'|translate}}</span></p></md-list-item>
+  <md-list-item><h3 md-line> {{results.labourCredit}} </h3><p md-line><span class="demo-2">{{'OUTPUT.LABOUR_CREDIT'|translate}}</span></p></md-list-item>
+  <md-list-item><h3 md-line> {{results.netYear}} </h3><p md-line><span class="demo-2">{{'OUTPUT.NET_YEAR'|translate}}</span></p></md-list-item>
+  <md-list-item><h3 md-line> {{results.netMonth}} </h3><p md-line><span class="demo-2">{{'OUTPUT.NET_MONTH'|translate}}</span></p></md-list-item>
+</md-list>

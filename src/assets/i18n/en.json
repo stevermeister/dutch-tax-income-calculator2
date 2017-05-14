@@ -1,0 +1,47 @@
+{
+  "AGE": "65 years or older",
+  "ADVANCED": "Advanced",
+  "ALLOWANCE": "Holiday allowance included",
+  "GITHUB": "Fork me on GitHub",
+  "GENERAL": "General",
+  "GROSS_YEAR": "Gross Year",
+  "GROSS_MONTH": "Gross Month",
+  "GROSS_WEEK": "Gross Week",
+  "GROSS_DAY": "Gross Day",
+  "GROSS_HOUR": "Gross Hour",
+  "LANGUAGE": "Language",
+  "NET_MONTH": "Net Year",
+  "OPTIONS": "Options",
+  "RULING": "Options",
+  "SALARY": "Salary",
+  "SOCIAL": "Social security",
+  "YEAR": "Calendar year",
+  "OUTPUT": {
+    "GROSS_ALLOWANCE": "Year Gross Holiday Allowance",
+    "GROSS_YEAR": "Year Gross Income",
+    "GROSS_MONTH": "Month Gross Income",
+    "GROSS_WEEK": "Week Gross Income",
+    "GROSS_DAY": "Day Gross Income",
+    "GROSS_HOUR": "Hour Gross Income",
+    "TAX_FREE_YEAR": "Tax Free Income",
+    "TAX_FREE": "Ruling Real Percentage",
+    "TAXABLE_YEAR": "Taxable Income",
+    "PAYROLL_TAX": "Payroll Tax",
+    "SOCIAL_TAX": "Social Security Tax",
+    "GENERAL_CREDIT": "General Tax Credit",
+    "LABOUR_CREDIT": "Labour Tax Credit",
+    "INCOME_TAX": "Total Income Tax",
+    "NET_ALLOWANCE": "Year Net Holiday Allowance",
+    "NET_YEAR": "Year Net Income",
+    "NET_MONTH": "Month Net Income",
+    "NET_WEEK": "Week Net Income",
+    "NET_DAY": "Day Net Income",
+    "NET_HOUR": "Hour Net Income"
+  },
+
+  "allowance_label": "Holiday allowance included",
+  "age_label": "I'm 65 years old",
+
+
+  "ruling_label": "I have 30% ruling"
+}

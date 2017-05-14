@@ -1,44 +1,73 @@
-import {BrowserModule} from "@angular/platform-browser";
-import {HttpModule} from '@angular/http';
-import {NgModule} from "@angular/core";
-import {CommonModule} from "@angular/common";
-import {FormsModule} from "@angular/forms";
-import {AppComponent} from "./app.component";
-import {MdInputModule} from "@angular2-material/input";
-import {MdButtonModule} from "@angular2-material/button";
-import {MdButtonToggleModule} from "@angular2-material/button-toggle";
-import {MdTabsModule} from "@angular2-material/tabs";
-import {MdListModule} from "@angular2-material/list";
-import {MdCheckboxModule} from "@angular2-material/checkbox";
-import {MdRadioModule} from "@angular2-material/radio";
-import {TranslateModule} from 'ng2-translate/ng2-translate';
-import {InputIncomeComponent} from "./input-income/input-income.component";
-import {ResultsOutputComponent} from "./results-output/results-output.component";
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { HttpModule, Http } from '@angular/http';
+
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  MdButtonModule,
+  MdButtonToggleModule,
+  MdCardModule,
+  MdCheckboxModule,
+  MdIconModule,
+  MdInputModule,
+  MdListModule,
+  MdRadioModule,
+  MdSelectModule,
+  MdSidenavModule,
+  MdTabsModule,
+  MdToolbarModule,
+  MdTooltipModule,
+} from '@angular/material';
+
+import { AppComponent } from './app.component';
+import { IncomeComponent } from './income/income.component';
+import { ResultComponent } from './result/result.component';
+import { RulingComponent } from './ruling/ruling.component';
+
+// AoT requires an exported function for factories
+export function HttpLoaderFactory(http: Http) {
+  // Default path /assets/i18n/en.json
+  return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
+}
 
 @NgModule({
   declarations: [
     AppComponent,
-    InputIncomeComponent,
-    ResultsOutputComponent,
+    IncomeComponent,
+    ResultComponent,
+    RulingComponent,
   ],
   imports: [
-    MdInputModule,
+    BrowserModule,
+    FormsModule,
+    HttpModule,
+    TranslateModule.forRoot({
+        loader: {
+            provide: TranslateLoader,
+            useFactory: HttpLoaderFactory,
+            deps: [Http]
+        }
+    }),
+    BrowserAnimationsModule,
     MdButtonModule,
     MdButtonToggleModule,
-    MdListModule,
+    MdCardModule,
     MdCheckboxModule,
+    MdIconModule,
+    MdInputModule,
+    MdListModule,
     MdRadioModule,
+    MdSelectModule,
+    MdSidenavModule,
     MdTabsModule,
-    TranslateModule.forRoot(),
-    BrowserModule,
-    CommonModule,
-    FormsModule,
-    HttpModule
+    MdToolbarModule,
+    MdTooltipModule,
   ],
   providers: [],
   entryComponents: [AppComponent],
   bootstrap: [AppComponent]
 })
-export class AppModule {
-
-}
+export class AppModule { }

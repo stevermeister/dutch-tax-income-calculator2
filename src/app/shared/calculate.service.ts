@@ -1,5 +1,7 @@
-import {Injectable} from "@angular/core";
-import {Subject} from "rxjs/Subject";
+import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs/Subject';
+
+import * as CalcConstants from './calculate.const';
 
 type InputParams = {
   income: number,
@@ -22,8 +24,10 @@ type OutputParams = {
 export class CalculateService {
   private static _inputSubject: Subject<InputParams> = new Subject();
   private static _outputSubject: Subject<OutputParams> = new Subject();
+  public constants: any;
 
   constructor() {
+    this.constants = CalcConstants.data;
     CalculateService._inputSubject.subscribe(input=> {
 
       let output: OutputParams = {

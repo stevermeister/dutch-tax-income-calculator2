@@ -1,0 +1,36 @@
+{
+  "LANGUAGE": "Língua",
+  "GROSS_YEAR": "Ano Bruto",
+  "GROSS_MONTH": "Mês Bruto",
+  "GROSS_WEEK": "Semana Bruto",
+  "GROSS_DAY": "Dia Bruto",
+  "GROSS_HOUR": "Hora Bruto",
+  "NET_MONTH": "Mês Líquido",
+  "OUTPUT": {
+    "GROSS_ALLOWANCE": "Adicional de Férias Anual Bruto",
+    "GROSS_YEAR": "Salário Ano Bruto",
+    "GROSS_MONTH": "Salário Mês Bruto",
+    "GROSS_WEEK": "Salário Semana Bruto",
+    "GROSS_DAY": "Salário Dia Bruto",
+    "GROSS_HOUR": "Salário Hora Bruto",
+    "TAX_FREE_YEAR": "Salário Livre de Imposto",
+    "TAX_FREE": "Percentagem Real da Regra",
+    "TAXABLE_YEAR": "Salário Base",
+    "PAYROLL_TAX": "Imposto de Renda",
+    "SOCIAL_TAX": "Previdência Social",
+    "GENERAL_CREDIT": "Desconto Comum",
+    "LABOUR_CREDIT": "Desconto Trabalhador",
+    "INCOME_TAX": "Total Imposto",
+    "NET_ALLOWANCE": "Adicional de Férias Anual Líquido",
+    "NET_YEAR": "Salário Ano Líquido",
+    "NET_MONTH": "Salário Mês Líquido",
+    "NET_WEEK": "Salário Semana Líquido",
+    "NET_DAY": "Salário Dia Líquido",
+    "NET_HOUR": "Salário Hora Líquido"
+  },
+
+  "allowance_label": "Adicional de férias incluso",
+  "age_label": "Eu tenho mais de 65 anos",
+  "socialSecurity_label": "Previdência Social",
+  "ruling_label": "Eu tenho a regra de 30%"
+}

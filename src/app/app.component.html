@@ -1,22 +1,29 @@
-<md-tab-group>
-  <md-tab>
-    <template md-tab-label>{{'tab_gross_year'| translate}}</template>
-    <template md-tab-content>
-      <app-input-income [incomeType]="'gross_year'"></app-input-income>
-    </template>
-  </md-tab>
-  <md-tab>
-    <template md-tab-label>{{'tab_net_month'| translate}}</template>
-    <template md-tab-content>
-      <app-input-income [incomeType]="'net_month'"></app-input-income>
-    </template>
-  </md-tab>
-</md-tab-group>
-<app-results-output></app-results-output>
-<mdbutton></mdbutton>
-<md-button-toggle-group>
-  <md-button-toggle (click)="changeLang('en')">EN</md-button-toggle>
-  <md-button-toggle value="true" (click)="changeLang('ru')">RU</md-button-toggle>
-</md-button-toggle-group>
-
-
+<md-toolbar color="dark">
+    <div class="title">
+      Dutch Income Tax Calculator
+      <span class="motto">makes your work easy</span>
+    </div>
+    <div class="fill-space"></div>
+    <div>
+      <md-select color="light" placeholder="{{'LANGUAGE' | translate}}" (change)="translate.use(selectedLang)" [(ngModel)]="selectedLang">
+        <md-option *ngFor="let lang of translate.getLangs()" [value]="lang">
+          {{lang}}
+        </md-option>
+      </md-select>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <a class="github" href="https://github.com/stevermeister/dutch-tax-income-calculator2">
+        <md-icon mdTooltip="{{'GITHUB' | translate}}" mdTooltipPosition="left"></md-icon>
+      </a>
+    </div>
+</md-toolbar>
+<div class="content">
+  <md-tab-group>
+    <md-tab label="{{'GROSS_YEAR'| translate}}">
+      <app-income [incomeType]="'gross_year'"></app-income>
+    </md-tab>
+    <md-tab label="{{'NET_MONTH'| translate}}">
+      <app-income [incomeType]="'net_month'"></app-income>
+    </md-tab>
+  </md-tab-group>
+  <app-ruling></app-ruling>
+<div>

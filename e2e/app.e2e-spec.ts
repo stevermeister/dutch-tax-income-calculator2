@@ -1,10 +1,10 @@
-import { DutchTaxIncomeCalculator2Page } from './app.po';
+import { CalculatorPage } from './app.po';
 
-describe('dutch-tax-income-calculator2 App', function() {
-  let page: DutchTaxIncomeCalculator2Page;
+describe('calculator App', () => {
+  let page: CalculatorPage;
 
   beforeEach(() => {
-    page = new DutchTaxIncomeCalculator2Page();
+    page = new CalculatorPage();
   });
 
   it('should display message saying app works', () => {

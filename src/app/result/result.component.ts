@@ -1,16 +1,16 @@
-import {Component, OnInit} from "@angular/core";
-import {CalculateService} from "../shared/calculate.service";
-import {TranslatePipe} from "ng2-translate";
+import { Component, OnInit } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
+
+import { CalculateService } from '../shared/calculate.service';
 
 @Component({
-  selector: 'app-results-output',
-  templateUrl: 'results-output.component.html',
-  styleUrls: ['results-output.component.css'],
+  selector: 'app-result',
+  templateUrl: 'result.component.html',
+  styleUrls: ['result.component.css'],
   providers: [CalculateService],
   host:{'background-color':'red'},
-  pipes: [TranslatePipe]
 })
-export class ResultsOutputComponent implements OnInit {
+export class ResultComponent implements OnInit {
   private _calculateService: CalculateService;
   public results: any;
 

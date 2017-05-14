@@ -2,17 +2,19 @@ import {
   Component,
   Input,
   OnInit
-} from "@angular/core";
-import {CalculateService} from "../shared/calculate.service";
-import {TranslatePipe} from "ng2-translate";
+} from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
+
+import { CalculateService } from '../shared/calculate.service';
+import { ResultComponent } from '../result/result.component';
+
 @Component({
-  selector: 'app-input-income',
-  templateUrl: 'input-income.component.html',
-  styleUrls: ['input-income.component.css'],
+  selector: 'app-income',
+  templateUrl: 'income.component.html',
+  styleUrls: ['income.component.css'],
   providers: [CalculateService],
-  pipes: [TranslatePipe]
 })
-export class InputIncomeComponent implements OnInit {
+export class IncomeComponent implements OnInit {
   @Input()
   public incomeType;
   private _calculateService: CalculateService;

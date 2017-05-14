@@ -3,11 +3,11 @@
 import { By }           from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { addProviders, async, inject } from '@angular/core/testing';
-import { ResultsOutputComponent } from './results-output.component';
+import { ResultComponent } from './result.component';
 
-describe('Component: ResultsOutput', () => {
+describe('Component: Result', () => {
   it('should create an instance', () => {
-    // let component = new ResultsOutputComponent();
+    // let component = new ResultComponent();
     // expect(component).toBeTruthy();
   });
 });

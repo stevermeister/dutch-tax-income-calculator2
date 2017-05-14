@@ -1,0 +1,27 @@
+<md-card>
+  <md-card-title>Disclaimer</md-card-title>
+  <md-card-content class="disclaimer">
+    <p>
+      This calculator is for illustrative purposes only. No guarantee is made for the accuracy of the data provided.
+      Consult a qualified tax services professional before making any decision.
+    </p>
+  </md-card-content>
+</md-card>
+
+<md-card>
+  <md-card-title>About 30% Ruling</md-card-title>
+  <md-card-content>
+    <p>
+      The salary criteria for the <b>30% ruling</b> as per January {{year}} are as follows:<br>
+    </p>
+    <ul>
+      <li>The salary amount does not matter if working with scientific research.</li>
+      <li>The annual taxable salary for an employee with a master’s degree and who is younger than 30 years, must be more than
+        <b>{{ruling[year].young | currency:'EUR':true:'1.0-0'}}</b> ({{year - 1}}: {{ruling[year - 1].young | currency:'EUR':true:'1.0-0'}}).
+      </li>
+      <li>The annual taxable salary for other employees must be more than
+        <b>{{ruling[year].normal | currency:'EUR':true:'1.0-0'}}</b> ({{year - 1}}: {{ruling[year - 1].normal | currency:'EUR':true:'1.0-0'}}).
+      </li>
+    </ul>
+  </md-card-content>
+</md-card>

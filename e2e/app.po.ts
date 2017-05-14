@@ -1,4 +1,6 @@
-export class DutchTaxIncomeCalculator2Page {
+import { browser, by, element } from 'protractor';
+
+export class CalculatorPage {
   navigateTo() {
     return browser.get('/');
   }

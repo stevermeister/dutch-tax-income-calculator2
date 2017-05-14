@@ -1,24 +1,21 @@
-import {Component} from "@angular/core";
-import {InputIncomeComponent} from "./input-income/input-income.component";
-import {ResultsOutputComponent} from "./results-output/results-output.component";
-import {
-  TranslateService,
-  TranslatePipe
-} from "ng2-translate";
+import { Component } from '@angular/core';
+import { IncomeComponent } from './income/income.component';
+
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+
 @Component({
   selector: 'app-root',
-  templateUrl: 'app.component.html',
-  styleUrls: ['app.component.css'],
-  directives: [InputIncomeComponent, ResultsOutputComponent],
-  pipes: [TranslatePipe]
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  constructor(private _translate: TranslateService) {
-    //this._translate.setDefaultLang('en');
-    this._translate.use('en');
-  }
+  selectedLang: string;
 
-  public changeLang(lang){
-    this._translate.use(lang);
+  constructor(private translate: TranslateService) {
+    translate.addLangs(['en', 'nl', 'pt', 'ru']);
+    translate.setDefaultLang('en');
+
+    let browserLang = translate.getBrowserLang();
+    translate.use(browserLang.match(/en|nl|pt|ru/) ? browserLang : 'en');
   }
 }
