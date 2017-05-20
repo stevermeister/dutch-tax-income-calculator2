@@ -3,11 +3,11 @@
 import { By }           from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { addProviders, async, inject } from '@angular/core/testing';
-import { IncomeComponent } from './income.component';
+import { ResultComponent } from './result.component';
 
-describe('Component: Income', () => {
+describe('Component: Result', () => {
   it('should create an instance', () => {
-    let component = new IncomeComponent();
+    let component = new ResultComponent();
     expect(component).toBeTruthy();
   });
 });

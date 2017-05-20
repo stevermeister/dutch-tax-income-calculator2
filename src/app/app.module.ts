@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule, Http } from '@angular/http';
 
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -20,12 +21,12 @@ import {
   MdTabsModule,
   MdToolbarModule,
   MdTooltipModule,
+  MdMenuModule,
 } from '@angular/material';
 
 import { AppComponent } from './app.component';
-import { IncomeComponent } from './income/income.component';
-import { ResultComponent } from './result/result.component';
-import { RulingComponent } from './ruling/ruling.component';
+import { ResultComponent } from './result.component';
+import { RulingComponent } from './ruling.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: Http) {
@@ -36,12 +37,12 @@ export function HttpLoaderFactory(http: Http) {
 @NgModule({
   declarations: [
     AppComponent,
-    IncomeComponent,
     ResultComponent,
     RulingComponent,
   ],
   imports: [
     BrowserModule,
+    FlexLayoutModule,
     FormsModule,
     HttpModule,
     TranslateModule.forRoot({
@@ -65,6 +66,7 @@ export function HttpLoaderFactory(http: Http) {
     MdTabsModule,
     MdToolbarModule,
     MdTooltipModule,
+    MdMenuModule,
   ],
   providers: [],
   entryComponents: [AppComponent],

@@ -5,8 +5,29 @@
 @import url(//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css);
 
 body {
-    margin: 0px;
+  margin: 0px;
 }
-md-toolbar-row {
-    height: 80px !important;
+
+.hide {
+  display: none !important;
+}
+
+.toolbar .mat-toolbar-row {
+  height: 80px !important;
+}
+
+.mat-checkbox-inner-container-no-side-margin {
+  margin-right: 8px !important;
+}
+
+.item-fill-height>.mat-list-item-content {
+  height: inherit !important;
+}
+
+.mat-sidenav-content {
+  transform: none !important;
+}
+
+.mat-sidenav-backdrop.mat-sidenav-shown {
+  background-color: rgba(0,0,0,.4) !important;
 }

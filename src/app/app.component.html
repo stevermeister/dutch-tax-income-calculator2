@@ -1,28 +1,43 @@
-<md-toolbar color="dark">
-    <div class="title">
-      Dutch Income Tax Calculator
-      <span class="motto">makes your work easy</span>
-    </div>
-    <div class="fill-space"></div>
-    <div>
-      <md-select color="light" placeholder="{{'LANGUAGE' | translate}}" (change)="translate.use(selectedLang)" [(ngModel)]="selectedLang">
+<md-toolbar class="toolbar">
+  <div fxLayout="row" fxFill fxLayoutAlign=" center">
+    <div fxFlex="none">{{'TITLE'|translate}}</div>
+    <div fxFlex="none" fxShow="false" fxShow.gt-sm class="motto">&nbsp;{{'MOTTO'|translate}} {{year - 2}}, {{year - 1}} {{'AND'|translate}} {{year}}</div>
+    <div fxFlex></div>
+    <div fxFlex="none" fxShow="false" fxShow.gt-sm>
+      <md-select placeholder="{{'LANGUAGE'|translate}}" (change)="translate.use(selectedLang)" [(ngModel)]="selectedLang">
         <md-option *ngFor="let lang of translate.getLangs()" [value]="lang">
           {{lang}}
         </md-option>
       </md-select>
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <a class="github" href="https://github.com/stevermeister/dutch-tax-income-calculator2">
-        <md-icon mdTooltip="{{'GITHUB' | translate}}" mdTooltipPosition="left"></md-icon>
+      <a class="github" href="https://github.com/eduardomourar/dutch-tax-income-calculator2">
+        <md-icon mdTooltip="{{'GITHUB'|translate}}" mdTooltipPosition="left"></md-icon>
       </a>
     </div>
+    <div fxFlex="none" fxHide="false" fxHide.gt-sm>
+      <button md-icon-button [mdMenuTriggerFor]="menu">
+        <md-icon>more_vert</md-icon>
+      </button>
+      <md-menu #menu="mdMenu">
+        <a md-menu-item href="https://github.com/eduardomourar/dutch-tax-income-calculator2" mdTooltip="{{'GITHUB'|translate}}" mdTooltipPosition="left">
+          <md-icon class="github"></md-icon>
+        </a>
+        <md-divider></md-divider>
+        <label class="language">{{'LANGUAGE'|translate}}</label>
+        <button md-menu-item *ngFor="let lang of translate.getLangs()" (click)="translate.use(lang)">
+          <span>{{lang}}</span>
+        </button>
+      </md-menu>
+    </div>
+  </div>
 </md-toolbar>
 <div class="content">
   <md-tab-group>
-    <md-tab label="{{'GROSS_YEAR'| translate}}">
-      <app-income [incomeType]="'gross_year'"></app-income>
-    </md-tab>
-    <md-tab label="{{'NET_MONTH'| translate}}">
-      <app-income [incomeType]="'net_month'"></app-income>
+    <md-tab *ngFor="let choice of choices">
+      <ng-template md-tab-label>
+        <label mdTooltip="{{rename(choice)+'_TITLE'|translate}}" >{{rename(choice)|translate}}</label>
+      </ng-template>
+      <app-result [incomeType]="choice"></app-result>
     </md-tab>
   </md-tab-group>
   <app-ruling></app-ruling>

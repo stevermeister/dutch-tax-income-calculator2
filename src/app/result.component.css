@@ -1,0 +1,148 @@
+md-input-container {
+  width: 100%;
+}
+
+md-input-container.income {
+  width: 50%;
+  font-size: 30px;
+  margin-top: 20px;
+}
+
+.mat-sidenav-container {
+  height: 650px;
+  margin: 5px 1vw;
+}
+
+.sidenav-content {
+  display: flex;
+  padding: 20px;
+  align-items: right;
+  justify-content: right;
+  float: right;
+  text-align: right;
+}
+
+.mat-sidenav {
+ /* padding: 10px;*/
+  max-width: 70vw;
+}
+
+.mat-fab {
+  position: fixed;
+  left: 20px;
+  top: 10px;
+  transform: translateZ(0);
+}
+
+.mat-radio-group {
+  margin-left: 10px;
+}
+
+.mat-radio-button {
+  margin: 10px;
+  display: block;
+}
+
+.result {
+  font-weight: bold;
+  color: grey;
+}
+
+.result .mat-list-item .mat-list-text>* {
+  font-size: 1.17em !important;
+}
+
+.result-positive {
+  color: #002db3;
+}
+
+.result-negative {
+  color: #cc0000;
+}
+
+.options {
+  font-size: 12px !important;
+}
+
+.collapsible-item {
+  overflow: hidden;
+}
+
+.collapsible-heading {
+  cursor: pointer;
+  position: relative;
+  z-index: 100000000;
+  background: rgba(245, 245, 245, .9);
+}
+
+.collapsible-heading:focus {
+  outline: none;
+  border: 0;
+}
+
+.collapsible-item:first-of-type {
+  border-top:0px;
+}
+
+.collapsible-heading-collapsed p {
+  font-size: 16px;
+  font-weight: normal;
+  margin: 0px;
+}
+
+.collapsible-heading-expanded p {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0px;
+}
+
+.collapsible-content {
+  padding: 10px;
+}
+
+/*  animation:  */
+
+.slide-down.ng-hide {
+  height: 0;
+  transition: height 0.35s ease;
+  overflow: hidden;
+  position: relative;
+}
+
+.slide-down {
+  height: 100%;
+  transition: height 0.35s ease;
+  overflow: hidden;
+  position: relative;
+}
+
+.slide-down.ng-hide-remove,
+.slide-down.ng-hide-add {
+  /* remember, the .hg-hide class is added to element
+  when the active class is added causing it to appear
+  as hidden. Therefore set the styling to display=block
+  so that the hide animation is visible */
+  display: block!important;
+}
+
+.slide-down.ng-hide-add {
+  animation-name: hide;
+  -webkit-animation-name: hide;  
+
+  animation-duration: .5s; 
+  -webkit-animation-duration: .5s;
+
+  animation-timing-function: ease-in;  
+  -webkit-animation-timing-function: ease-in;  
+}
+
+.slide-down.ng-hide-remove {
+  animation-name: show;
+  -webkit-animation-name: show;  
+
+  animation-duration: .5s; 
+  -webkit-animation-duration: .5s;
+
+  animation-timing-function: ease-out;  
+  -webkit-animation-timing-function: ease-out;  
+}
