@@ -45,7 +45,7 @@ export class CalculateService {
   constructor() {
     CalculateService._inputSubject.subscribe(input=> {
 
-      let output: any = {};
+      let output: OutputParams = CONSTANTS.default.output;
       let income: number = +input.income || 0;
       let grossYear: number = 0;
 
@@ -55,10 +55,8 @@ export class CalculateService {
           grossYear = netYear * 1.35; // Initial guess
 
           let options = {
-            tolerance: 5e-4,
             maxIter: 20,
-            h: 1e-4,
-            verbose: true,
+            verbose: false,
           };
 
           let f = (x: number): number => {
@@ -77,11 +75,12 @@ export class CalculateService {
         grossYear += output.grossDay * CONSTANTS.workingDays + output.grossHour * CONSTANTS.workingWeeks * input.hours;
         if (grossYear > 0) {
           output = this.calculate(grossYear, input, true);
-          console.log(output);
+          
         }
         output.grossYear = grossYear;
       }
       output[input.type] = income;
+      //console.log(output);
       CalculateService._outputSubject.next(output);
     });
   }
@@ -97,28 +96,7 @@ export class CalculateService {
   // For calculation instructions:
   // https://www.belastingdienst.nl/wps/wcm/connect/bldcontentnl/themaoverstijgend/brochures_en_publicaties/rekenvoorschriften-voor-de-geautomatiseerde-loonadministratie-januari-2017
   private calculate(grossYear: number, input: InputParams, full: boolean): OutputParams {
-    let output: OutputParams = {
-      grossAllowance: 0,
-      grossYear: 0,
-      grossMonth: 0,
-      grossWeek: 0,
-      grossDay: 0,
-      grossHour: 0,
-      taxFreeYear: 0,
-      taxFree: 0,
-      taxableYear: 0,
-      payrollTax: 0,
-      socialTax: 0,
-      generalCredit: 0,
-      labourCredit: 0,
-      incomeTax: 0,
-      netAllowance: 0,
-      netYear: 0,
-      netMonth: 0,
-      netWeek: 0,
-      netDay: 0,
-      netHour: 0,
-    };
+    let output: OutputParams = CONSTANTS.default.output;
 
     output.grossYear = grossYear;
 
@@ -129,7 +107,7 @@ export class CalculateService {
       if (output.taxableYear > rulingIncome) {
         output.taxFreeYear = output.taxableYear * 0.30;
         output.taxableYear -= output.taxFreeYear;
-        if (output.taxableYear < rulingIncome) { // For ruling partially
+        if (output.taxableYear < rulingIncome) { // For partial scheme
           output.taxFreeYear = grossYear - rulingIncome;
           output.taxableYear = rulingIncome;
         }
@@ -153,10 +131,10 @@ export class CalculateService {
       output.grossDay = grossYear / CONSTANTS.workingDays;
       output.grossHour = grossYear / (CONSTANTS.workingWeeks * input.hours);
 
-      output.taxFree = ~~(output.taxFreeYear / grossYear * 100);
+      output.taxFree = output.taxFreeYear / grossYear * 100;
 
       output.netAllowance = (input.allowance) ? output.netYear * (0.08 / 1.08) : 0;
-      //output.netYear -= output.netAllowance; // Remove holiday allowance from annual net amount
+      output.netYear -= output.netAllowance; // Remove holiday allowance from annual net amount
       output.netMonth = output.netYear / 12;
       output.netWeek = output.netYear / CONSTANTS.workingWeeks;
       output.netDay = output.netYear / CONSTANTS.workingDays;

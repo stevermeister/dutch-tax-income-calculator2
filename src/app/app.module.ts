@@ -25,8 +25,9 @@ import {
 } from '@angular/material';
 
 import { AppComponent } from './app.component';
-import { ResultComponent } from './result.component';
+import { ContentComponent } from './content.component';
 import { RulingComponent } from './ruling.component';
+import { EuroPipe } from './euro.pipe';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: Http) {
@@ -37,8 +38,9 @@ export function HttpLoaderFactory(http: Http) {
 @NgModule({
   declarations: [
     AppComponent,
-    ResultComponent,
+    ContentComponent,
     RulingComponent,
+    EuroPipe,
   ],
   imports: [
     BrowserModule,
@@ -68,7 +70,7 @@ export function HttpLoaderFactory(http: Http) {
     MdTooltipModule,
     MdMenuModule,
   ],
-  providers: [],
+  providers: [EuroPipe],
   entryComponents: [AppComponent],
   bootstrap: [AppComponent]
 })

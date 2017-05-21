@@ -2,10 +2,14 @@
   margin: 10px 2vw;
 }
 .title {
-  line-height: 13px;
+  align-items: flex-end;
+  font-size: 24px;
 }
 .motto {
   font-style: italic;
+  font-size: 14px;
+  letter-spacing: .02em;
+  margin-bottom: 2px;
   opacity: 0.6;
 }
 .github {

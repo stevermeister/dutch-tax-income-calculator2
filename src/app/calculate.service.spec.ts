@@ -1,12 +1,14 @@
 /* tslint:disable:no-unused-variable */
 
-import { addProviders, async, inject } from '@angular/core/testing';
+import { TestBed, async, inject } from '@angular/core/testing';
 import { CalculateService } from './calculate.service';
 
 describe('Service: Calculate', () => {
-  beforeEach(() => {
-    addProviders([CalculateService]);
-  });
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      providers: [CalculateService]
+    }).compileComponents();
+  }));
 
   it('should ...',
     inject([CalculateService],

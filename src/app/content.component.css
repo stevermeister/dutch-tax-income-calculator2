@@ -6,6 +6,7 @@ md-input-container.income {
   width: 50%;
   font-size: 30px;
   margin-top: 20px;
+  margin-left: 20px;
 }
 
 .mat-sidenav-container {
@@ -52,12 +53,16 @@ md-input-container.income {
   font-size: 1.17em !important;
 }
 
+.result-value {
+  color: black;
+}
+
 .result-positive {
-  color: #002db3;
+  color: #3366ff;
 }
 
 .result-negative {
-  color: #cc0000;
+  color: #FF3366;;
 }
 
 .options {
