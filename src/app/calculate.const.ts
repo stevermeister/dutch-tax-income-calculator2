@@ -351,5 +351,213 @@ export const CONSTANTS = {
         "rate": 184
       }
     ]
+  },
+  "specialRate": {
+    "2017": [
+      {
+        "bracket": 1,
+        "min": 0,
+        "max": 6481,
+        "rate": 0,
+        "older": 0
+      },
+      {
+        "bracket": 2,
+        "min": 6482,
+        "max": 10053,
+        "rate": 0.3478,
+        "older": 0
+      },
+      {
+        "bracket": 3,
+        "min": 10054,
+        "max": 18619,
+        "rate": 0.0823,
+        "older": 0
+      },
+      {
+        "bracket": 4,
+        "min": 18620,
+        "max": 19982,
+        "rate": 0.3655,
+        "older": 0
+      },
+      {
+        "bracket": 5,
+        "min": 19983,
+        "max": 21410,
+        "rate": 0.4559,
+        "older": 0
+      },
+      {
+        "bracket": 6,
+        "min": 21411,
+        "max": 32444,
+        "rate": 0.4559,
+        "older": 0.2534
+      },
+      {
+        "bracket": 7,
+        "min": 32445,
+        "max": 33791,
+        "rate": 0.4919,
+        "older": 0.2718
+      },
+      {
+        "bracket": 8,
+        "min": 33792,
+        "max": 67072,
+        "rate": 0.4919,
+        "older": 0.4508
+      },
+      {
+        "bracket": 9,
+        "min": 67073,
+        "max": 131729,
+        "rate": 0.556,
+        "older": 0.5384
+      },
+      {
+        "bracket": 10,
+        "min": 131730,
+        "rate": 0.52,
+        "older": 0.52
+      }
+    ],
+    "2016": [
+      {
+        "bracket": 1,
+        "min": 0,
+        "max": 6450,
+        "rate": 0,
+        "older": 0
+      },
+      {
+        "bracket": 2,
+        "min": 6451,
+        "max": 9878,
+        "rate": 0.3476,
+        "older": 0
+      },
+      {
+        "bracket": 3,
+        "min": 9879,
+        "max": 18295,
+        "rate": 0.0885,
+        "older": 0
+      },
+      {
+        "bracket": 4,
+        "min": 18296,
+        "max": 19922,
+        "rate": 0.3655,
+        "older": 0
+      },
+      {
+        "bracket": 5,
+        "min": 19923,
+        "max": 20737,
+        "rate": 0.4522,
+        "older": 0
+      },
+      {
+        "bracket": 6,
+        "min": 20732,
+        "max": 33715,
+        "rate": 0.4522,
+        "older": 0.2496
+      },
+      {
+        "bracket": 7,
+        "min": 33716,
+        "max": 34015, 
+        "rate": 0.4522,
+        "older": 0.4286
+      },
+      {
+        "bracket": 8,
+        "min": 34016,
+        "max": 66421,
+        "rate": 0.4922,
+        "older": 0.449
+      },
+      {
+        "bracket": 9,
+        "min": 66422,
+        "max": 120517,
+        "rate": 0.56,
+        "older": 0.5404
+      },
+      {
+        "bracket": 10,
+        "min": 120518,
+        "rate": 0.52,
+        "older": 0.52
+      }
+    ],
+    "2015": [
+      {
+        "bracket": 1,
+        "min": 0,
+        "max": 6350,
+        "rate": 0,
+        "older": 0
+      },
+      {
+        "bracket": 2,
+        "min": 6351,
+        "max": 15696,
+        "rate": 0.3650,
+        "older": 0
+      },
+      {
+        "bracket": 3,
+        "min": 15697,
+        "max": 19822,
+        "rate": 0.3650,
+        "older": 0.1860
+      },
+      {
+        "bracket": 4,
+        "min": 19823,
+        "max": 33589,
+        "rate": 0.4432,
+        "older": 0.2528
+      },
+      {
+        "bracket": 5,
+        "min": 33590,
+        "max": 49770,
+        "rate": 0.4432,
+        "older": 0.4318
+      },
+      {
+        "bracket": 6,
+        "min": 49771,
+        "max": 56935,
+        "rate": 0.4832,
+        "older": 0.4522
+      },
+      {
+        "bracket": 7,
+        "min": 56936,
+        "max": 57585,
+        "rate": 0.46,
+        "older": 0.4404
+      },
+      {
+        "bracket": 8,
+        "min": 57586,
+        "max": 100670,
+        "rate": 0.56,
+        "older": 0.5404
+      },
+      {
+        "bracket": 9,
+        "min": 100671,
+        "rate": 0.52,
+        "older": 0.52
+      }
+    ]
   }
 };

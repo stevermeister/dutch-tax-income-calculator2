@@ -1,9 +1,7 @@
 /* You can add global styles to this file, and also import other style files*/
 @import './theme.scss';
-@import url(http://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic);
-@import url(http://fonts.googleapis.com/icon?family=Material+Icons);
-@import url(http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css);
-
+@import url(https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic);
+@import url(https://fonts.googleapis.com/icon?family=Material+Icons);
 
 body {
   margin: 0px;
@@ -30,5 +28,13 @@ body {
 }
 
 .mat-sidenav-backdrop.mat-sidenav-shown {
-  background-color: rgba(0,0,0,.4) !important;
+  background-color: rgba(0,0,0,.3) !important;
+}
+
+.collapsible-heading .mat-toolbar-row {
+  height: 40px !important;
+}
+
+.result.mat-list .mat-list-item .mat-list-item-content {
+  font-size: 1.17em !important;
 }

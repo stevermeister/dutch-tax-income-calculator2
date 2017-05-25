@@ -12,6 +12,7 @@ type InputParams = {
   older: boolean,
   ruling: string,
   hours: number,
+  truncate: boolean,
 };
 
 type OutputParams = {
@@ -60,7 +61,9 @@ export class CalculateService {
           };
 
           let f = (x: number): number => {
-            let output = this.calculate(x, input, false);
+            let inputChanged = input;
+            inputChanged.truncate = false;
+            let output = this.calculate(x, inputChanged, false);
             return output.netYear - netYear;
           };
 
@@ -75,12 +78,14 @@ export class CalculateService {
         grossYear += output.grossDay * CONSTANTS.workingDays + output.grossHour * CONSTANTS.workingWeeks * input.hours;
         if (grossYear > 0) {
           output = this.calculate(grossYear, input, true);
-          
         }
         output.grossYear = grossYear;
       }
       output[input.type] = income;
-      //console.log(output);
+      for (let key in output) {
+        output[key] = ~~(output[key]);
+      }
+      console.log(JSON.stringify(input), JSON.stringify(output));
       CalculateService._outputSubject.next(output);
     });
   }
@@ -99,6 +104,7 @@ export class CalculateService {
     let output: OutputParams = CONSTANTS.default.output;
 
     output.grossYear = grossYear;
+    output.grossAllowance = (input.allowance) ? grossYear * (0.08 / 1.08) : 0; // Vakantiegeld (8%)
 
     output.taxFreeYear = 0;
     output.taxableYear = grossYear;
@@ -113,28 +119,27 @@ export class CalculateService {
         }
       }
     }
+    let grossBase = output.taxableYear - output.grossAllowance;
 
-    output.payrollTax = -1 * this.getPayrollTax(input.year, output.taxableYear);
-    output.socialTax = (input.social) ? -1 * this.getSocialTax(input.year, output.taxableYear, input.older) : 0;
-    let socialCredit: number = this.getSocialCredit(input.year, input.older, input.social);
-    output.generalCredit = socialCredit * this.getGeneralCredit(input.year, output.taxableYear);
-    output.labourCredit = socialCredit * this.getLabourCredit(input.year, output.taxableYear);
+    output.payrollTax = -1 * this.getPayrollTax(input.year, grossBase);
+    output.socialTax = (input.social) ? -1 * this.getSocialTax(input.year, grossBase, input.older) : 0;
+    let socialCredit: number = this.getSocialPercent(input.year, input.older, input.social);
+    output.generalCredit = socialCredit * this.getGeneralCredit(input.year, grossBase);
+    output.labourCredit = socialCredit * this.getLabourCredit(input.year, grossBase);
     output.incomeTax = output.payrollTax + output.socialTax + output.generalCredit + output.labourCredit;
     output.incomeTax = (output.incomeTax < 0) ? output.incomeTax : 0;
 
-    output.netYear = output.taxableYear + output.incomeTax + output.taxFreeYear;
+    output.netYear = grossBase + output.incomeTax + output.taxFreeYear;
 
     if (full) {
-      output.grossAllowance = (input.allowance) ? grossYear * (0.08 / 1.08) : 0; // Vakantiegeld (8%)
       output.grossMonth = grossYear / 12;
       output.grossWeek = grossYear / CONSTANTS.workingWeeks;
       output.grossDay = grossYear / CONSTANTS.workingDays;
       output.grossHour = grossYear / (CONSTANTS.workingWeeks * input.hours);
 
       output.taxFree = output.taxFreeYear / grossYear * 100;
+      output.netAllowance = (input.allowance) ? output.grossAllowance * (1 - this.getSpecialRate(input.year, grossYear, input.older, input.social)) : 0;
 
-      output.netAllowance = (input.allowance) ? output.netYear * (0.08 / 1.08) : 0;
-      output.netYear -= output.netAllowance; // Remove holiday allowance from annual net amount
       output.netMonth = output.netYear / 12;
       output.netWeek = output.netYear / CONSTANTS.workingWeeks;
       output.netDay = output.netYear / CONSTANTS.workingDays;
@@ -173,9 +178,9 @@ export class CalculateService {
     return this.getRates(CONSTANTS.labourCredit[year], salary);
   }
 
-  // Social Security Contribution (Volksverzekeringen) Component of Tax Credit
+  // Social Security Contribution (Volksverzekeringen) Component of Tax
   // https://www.belastingdienst.nl/wps/wcm/connect/bldcontentnl/belastingdienst/prive/internationaal/fiscale_regelingen/sociale_zekerheid_bij_grensoverschrijdend_werken_en_ondernemen/hoe_wordt_de_premie_berekend/berekening_premie_volksverzekeringen_heffingskorting_deel_van_het_jaar_premieplichtig/heffingskortingen/
-  private getSocialCredit(year: number, older: boolean, social: boolean): number {
+  private getSocialPercent(year: number, older: boolean, social: boolean): number {
     /*
     * JSON properties for socialPercent object
     * rate: Higher full rate including social contributions to be used to get proportion
@@ -192,30 +197,47 @@ export class CalculateService {
     return percentage;
   }
 
+  // Special Rate for One-off Rewards (Loonheffing Bijzonder Tarief)
+  // https://www.belastingdienst.nl/wps/wcm/connect/bldcontentnl/themaoverstijgend/rekenhulpen/loonbelastingtabellen
+  private getSpecialRate(year: number, salary: number, older: boolean, social: boolean): number {
+    let rate = 0;
+    if (social) {
+      rate = this.getRates(CONSTANTS.specialRate[year], salary, (older) ? 'older' : 'rate', false);
+    }
+    return rate;
+  }
+
   // https://www.belastingdienst.nl/wps/wcm/connect/bldcontentnl/themaoverstijgend/brochures_en_publicaties/handboek-loonheffingen-2017
-  private getRates(brackets: any, salary: number, type: string = 'rate'): number {
+  private getRates(brackets: any, salary: number, type: string = 'rate', cumulative: boolean = true): number {
     let amount: number = 0;
     let tax: number, delta: number, percent: boolean;
 
     brackets.some((bracket, index) => {
-      delta = (bracket.max) ? bracket.max - bracket.min : Infinity; // Consider infinity when no upper bound
+      bracket.max = bracket.max || Infinity; // Consider infinity when no upper bound
       tax = (type && bracket[type]) ? bracket[type] : bracket['rate'];
-      percent = (tax != 0 && tax > -1 && tax < 1); // Check if rate is percentage or fixed
-      if (salary <= delta) {
-        if (percent) {
-          amount += Math.trunc((salary * 100) * tax) / 100; // Round down at 2 decimal places
+      salary = Math.trunc(salary);
+      if (cumulative) {
+        delta = bracket.max - bracket.min;
+        percent = (tax != 0 && tax > -1 && tax < 1); // Check if rate is percentage or fixed
+        if (salary <= delta) {
+          if (percent) {
+            amount += Math.trunc((salary * 100) * tax) / 100; // Round down at 2 decimal places
+          } else {
+            amount = tax;
+          }
+          //console.log(index, salary, delta, tax, percent, amount);
+          return true; // Break loop when reach last bracket
         } else {
-          amount = tax;
+          if (percent) {
+            amount += (delta * tax);
+          } else {
+            amount = tax;
+          }
+          salary -= delta;
         }
-        //console.log(index, salary, delta, tax, percent, amount);
-        return true; // Break loop when reach last bracket
-      } else {
-        if (percent) {
-          amount += (delta * tax);
-        } else {
-          amount = tax;
-        }
-        salary -= delta;
+      } else if (salary >= bracket.min && salary <= bracket.max) {
+        amount = tax;
+        return true;
       }
     });
     return amount;

@@ -3,6 +3,13 @@ import {
   Input,
   OnInit,
 } from '@angular/core';
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition,
+} from '@angular/animations';
 import { TranslatePipe } from '@ngx-translate/core';
 
 import { CalculateService } from './calculate.service';
@@ -11,8 +18,15 @@ import { CONSTANTS } from './calculate.const';
 @Component({
   selector: 'app-content',
   templateUrl: './content.component.html',
-  styleUrls: ['./content.component.css'],
+  styleUrls: ['./content.component.scss'],
   providers: [CalculateService],
+  animations: [
+    trigger('slideDown', [
+      state('up', style({height: 0})),
+      transition(':enter', animate('.5s ease-in')),
+      transition(':leave', animate('.5s ease-out'))
+    ])
+  ]
 })
 export class ContentComponent implements OnInit {
   
@@ -24,6 +38,7 @@ export class ContentComponent implements OnInit {
   public options: any;
   public output: any;
   public choices: string[];
+  public show: boolean = false;
   public getKeys = Object.keys;
 
   constructor(_calculateService: CalculateService) {
@@ -37,30 +52,33 @@ export class ContentComponent implements OnInit {
     this.years = CONSTANTS.years;
     this.options.year = this.years[0];
     this.ruling = this.options.ruling ? true : false;
+    this.options.truncate = true;
     let choices = [];
-    Object.keys(CONSTANTS.default.input).forEach(function(key) {
+    Object.keys(CONSTANTS.default.input).forEach(key => {
       choices.push(key);
     });
     this.choices = choices;
-    this.changeOption(this.options.type);
-    this._calculateService.calculateResult.subscribe(results=> {
+    this.changeOption(true, this.options.type);
+    this._calculateService.calculateResult.subscribe(results => {
       this.output = results;
     });
   }
 
   public rename(str: string): string {
-    let text = str.replace(/([a-z][A-Z])/g, function (g) {
+    let text = str.replace(/([a-z][A-Z])/g, g => {
       return g[0] + '_' + g[1];
     }).toUpperCase();
     return text;
   }
 
-  public changeOption(additional: any = false) {
-    if (additional === true) {
+  public changeOption(additional: boolean, type?: string) {
+    if (additional && !type) {
       this.options.ruling = this.ruling ? 'normal' : '';
-    } else if (additional) {
-      this.options.type = additional;
-      this.options.income = CONSTANTS.default.input[this.options.type];
+    } else if (additional && type) {
+      this.options.type = type;
+      this.options.income = CONSTANTS.default.input[type];
+    } else if (type) {
+      this.options.type = type;
     }
     this._calculateService.input = this.options;
   }

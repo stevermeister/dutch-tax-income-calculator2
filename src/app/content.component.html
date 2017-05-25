@@ -1,5 +1,5 @@
 <div class="content">
-  <md-tab-group [(selectedIndex)]="selectedTab" (selectChange)="changeOption(choices[selectedTab])">
+  <md-tab-group [(selectedIndex)]="selectedTab" (selectChange)="changeOption(true, choices[selectedTab])">
     <md-tab *ngFor="let choice of choices">
       <ng-template md-tab-label>
         <label mdTooltip="{{rename(choice)+'_TITLE'|translate}}" style="cursor: pointer;">{{rename(choice)|translate}}</label>
@@ -7,31 +7,32 @@
       <md-input-container class="income">
         <span md-prefix>€&nbsp;</span>
         <input mdInput type="number" min="1" autofocus required placeholder="{{'SALARY'|translate}}"
-          [(ngModel)]="options.income" (input)="changeOption(choice)" align="end">
+          [(ngModel)]="options.income" (input)="changeOption(false, choice)" align="end">
+        <md-hint align="end">{{rename(choice)+'_TITLE'|translate}}</md-hint>
       </md-input-container>
     </md-tab>
   </md-tab-group>
   <md-sidenav-container>
-    <div class="sidenav-content">
+    <button md-fab mdTooltip="{{'OPTIONS'|translate}}" (click)="sidenav.open(); changeOption()">
+      <md-icon>add</md-icon>
+    </button>
+    <div class="sidenav-result">
       <md-list class="result" *ngIf="output">
         <md-list-item [ngClass]="{'hide': !options.output[key]}" *ngFor="let key of getKeys(output)">
-          <h3 md-line *ngIf="key == 'taxFree'" [ngClass]="{'result-value': true, 'result-positive': output[key] > 0}">
+          <label md-line *ngIf="key == 'taxFree'" [ngClass]="{'value': true, 'positive': output[key] > 0}">
             {{output[key] | number:0}}%
-          </h3>
-          <h3 md-line *ngIf="key != 'taxFree'"
-              [ngClass]="{'result-value': true, 'result-positive': getPositive(output[key], key), 'result-negative': output[key] < 0}">
+          </label>
+          <label md-line *ngIf="key != 'taxFree'"
+              [ngClass]="{'value': true, 'positive': getPositive(output[key], key), 'negative': output[key] < 0}">
             {{output[key] | euro:key}}
-          </h3>
+          </label>
           <p md-line><span>{{'OUTPUT.'+rename(key)|translate}}</span></p>
         </md-list-item>
       </md-list>
-      <button md-fab mdTooltip="{{'OPTIONS'|translate}}" (click)="sidenav.open(); changeOption()">
-        <md-icon>add</md-icon>
-      </button>
     </div>
     <md-sidenav #sidenav align="start">
       <md-list>
-        <md-list-item>
+        <md-list-item class="label">
           <label md-line>{{'YEAR'|translate}}:</label>
         </md-list-item>
         <md-list-item class="item-fill-height">
@@ -78,25 +79,27 @@
         </md-list-item>
       </md-list>
       <div class="collapsible-item">
-        <md-toolbar class="collapsible-heading" (click)="active = !active"
-            [ngClass]="{'collapsible-heading-collapsed': !active, 'collapsible-heading-expanded': active}">
+        <md-toolbar class="collapsible-heading" (click)="show = !show"
+            [ngClass]="{'collapsed': !show, 'expanded': show}">
           <button md-icon-button type="button" aria-hidden="false" title="{{'EXPAND'|translate}}">
-            <md-icon md-font-library="material-icons" [ngClass]="{'hide': active}">expand_more</md-icon>
-            <md-icon md-font-library="material-icons" [ngClass]="{'hide': !active}">expand_less</md-icon>
+            <md-icon *ngIf="!show">expand_more</md-icon>
+            <md-icon *ngIf="show">expand_less</md-icon>
           </button>
-          <h4>{{'ADVANCED'|translate}}</h4>
+          <label>{{'ADVANCED'|translate}}</label>
         </md-toolbar>
-        <div class="slide-down" [ngClass]="{'hide': !active}">
+        <div class="slide-down" [@slideDown]="show ? 'void' : 'up'">
           <md-list class="collapsible-content">
             <md-list-item>
-              <md-input-container>
+              <md-input-container md-line>
                 <input mdInput type="number" min="1" max="100" placeholder="{{'HOURS'|translate}}"
                   [(ngModel)]="options.hours" (input)="changeOption()" align="end">
               </md-input-container>
             </md-list-item>
-            <label>{{'DISPLAY'|translate}}:</label>
+            <md-list-item class="label">
+              <label md-line>{{'DISPLAY'|translate}}:</label>
+            </md-list-item>
             <md-list-item *ngFor="let key of getKeys(options.output)">
-              <md-checkbox class="options" md-line [(ngModel)]="options.output[key]" (change)="changeOption()">
+              <md-checkbox md-line class="options" [(ngModel)]="options.output[key]" (change)="changeOption()">
                 {{'OUTPUT.'+rename(key)|translate}}
               </md-checkbox>
             </md-list-item>

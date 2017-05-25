@@ -5,24 +5,26 @@
         <md-icon>more_vert</md-icon>
       </button>
       <md-menu #menu="mdMenu">
-        <a md-menu-item href="https://github.com/eduardomourar/dutch-tax-income-calculator2" mdTooltip="{{'GITHUB'|translate}}" mdTooltipPosition="left">
+        <a md-menu-item href="https://github.com/eduardomourar/dutch-tax-income-calculator2" mdTooltip="{{'GITHUB'|translate}}" mdTooltipPosition="right">
           <md-icon class="github"></md-icon>
         </a>
         <md-divider></md-divider>
-        <label class="language">{{'LANGUAGE'|translate}}</label>
+        <label class="language mat-tab-label">{{'LANGUAGE'|translate}}</label>
         <button md-menu-item *ngFor="let lang of translate.getLangs()" (click)="translate.use(lang)">
+          <md-icon class="flag {{lang}}"></md-icon>
           <span>{{lang}}</span>
         </button>
       </md-menu>
     </div>
     <div fxFlex="none" class="title">
-      &nbsp;&nbsp;&nbsp;&nbsp;{{'TITLE'|translate}}
+      {{'TITLE'|translate}}
       <div fxFlex="none" fxShow="false" fxShow.gt-sm class="motto">&nbsp;{{'MOTTO'|translate}} {{year - 2}}, {{year - 1}} {{'AND'|translate}} {{year}}</div>
     </div>
     <div fxFlex></div>
     <div fxFlex="none" fxShow="false" fxShow.gt-sm>
       <md-select placeholder="{{'LANGUAGE'|translate}}" (change)="translate.use(selectedLang)" [(ngModel)]="selectedLang">
-        <md-option *ngFor="let lang of translate.getLangs()" [value]="lang">
+        <md-option class="flags" *ngFor="let lang of translate.getLangs()" [value]="lang">
+          <md-icon class="flag {{lang}}"></md-icon>
           {{lang}}
         </md-option>
       </md-select>

@@ -6,7 +6,7 @@ import { CONSTANTS } from './calculate.const';
 @Component({
   selector: 'app-ruling',
   templateUrl: './ruling.component.html',
-  styleUrls: ['./ruling.component.css'],
+  styleUrls: ['./ruling.component.scss'],
 })
 export class RulingComponent {
   public ruling: any;
