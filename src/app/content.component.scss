@@ -71,15 +71,16 @@ md-sidenav-container {
           outline: none;
           border: 0;
         }
-        &.collapsed label {
+        label {
+          cursor: pointer;
           font-size: 16px;
-          font-weight: normal;
           margin: 0px;
         }
+        &.collapsed label {
+          font-weight: normal;
+        }
         &.expanded label {
-          font-size: 16px;
           font-weight: bold;
-          margin: 0px;
         }
       }
       .slide-down {

@@ -85,7 +85,7 @@ export class CalculateService {
       for (let key in output) {
         output[key] = ~~(output[key]);
       }
-      console.log(JSON.stringify(input), JSON.stringify(output));
+      //console.log(JSON.stringify(input), JSON.stringify(output));
       CalculateService._outputSubject.next(output);
     });
   }
