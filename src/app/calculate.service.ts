@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/Subject';
 
 import { CONSTANTS } from './calculate.const';
@@ -38,64 +38,55 @@ type OutputParams = {
   netHour: number,
 };
 
-@Injectable()
 export class CalculateService {
-  private static _inputSubject: Subject<InputParams> = new Subject();
-  private static _outputSubject: Subject<OutputParams> = new Subject();
+  private _outputSubject$$: Subject<OutputParams> = new Subject();
 
-  constructor() {
-    CalculateService._inputSubject.subscribe(input=> {
+  public set input(input: InputParams) {
+    let output: OutputParams = CONSTANTS.default.output;
+    let income: number = +input.income || 0;
+    let grossYear: number = 0;
 
-      let output: OutputParams = CONSTANTS.default.output;
-      let income: number = +input.income || 0;
-      let grossYear: number = 0;
+    if (input.type === 'netMonth') {
+      let netYear: number = income * 12;
+      if (netYear > 0) {
+        grossYear = netYear * 1.35; // Initial guess
 
-      if (input.type === 'netMonth') {
-        let netYear: number = income * 12;
-        if (netYear > 0) {
-          grossYear = netYear * 1.35; // Initial guess
+        let options = {
+          maxIter: 20,
+          verbose: false,
+        };
 
-          let options = {
-            maxIter: 20,
-            verbose: false,
-          };
+        let f = (x: number): number => {
+          let inputChanged = input;
+          inputChanged.truncate = false;
+          let output = this.calculate(x, inputChanged, false);
+          return output.netYear - netYear;
+        };
 
-          let f = (x: number): number => {
-            let inputChanged = input;
-            inputChanged.truncate = false;
-            let output = this.calculate(x, inputChanged, false);
-            return output.netYear - netYear;
-          };
-
-          grossYear = this.newtonRaphson(f, grossYear, options);
-          output = this.calculate(grossYear, input, true);
-        }
-        output.netYear = netYear;
-      } else {
-        output.grossYear = output.grossMonth = output.grossWeek = output.grossDay = output.grossHour = 0;
-        output[input.type] = income;
-        grossYear = output.grossYear + output.grossMonth * 12 + output.grossWeek * CONSTANTS.workingWeeks;
-        grossYear += output.grossDay * CONSTANTS.workingDays + output.grossHour * CONSTANTS.workingWeeks * input.hours;
-        if (grossYear > 0) {
-          output = this.calculate(grossYear, input, true);
-        }
-        output.grossYear = grossYear;
+        grossYear = this.newtonRaphson(f, grossYear, options);
+        output = this.calculate(grossYear, input, true);
       }
+      output.netYear = netYear;
+    } else {
+      output.grossYear = output.grossMonth = output.grossWeek = output.grossDay = output.grossHour = 0;
       output[input.type] = income;
-      for (let key in output) {
-        output[key] = ~~(output[key]);
+      grossYear = output.grossYear + output.grossMonth * 12 + output.grossWeek * CONSTANTS.workingWeeks;
+      grossYear += output.grossDay * CONSTANTS.workingDays + output.grossHour * CONSTANTS.workingWeeks * input.hours;
+      if (grossYear > 0) {
+        output = this.calculate(grossYear, input, true);
       }
-      //console.log(JSON.stringify(input), JSON.stringify(output));
-      CalculateService._outputSubject.next(output);
-    });
+      output.grossYear = grossYear;
+    }
+    output[input.type] = income;
+    for (let key in output) {
+      output[key] = ~~(output[key]);
+    }
+    //console.log(JSON.stringify(input), JSON.stringify(output));
+    this._outputSubject$$.next(output);
   }
 
-  set input(value) {
-    CalculateService._inputSubject.next(value);
-  }
-
-  public get calculateResult() {
-    return CalculateService._outputSubject;
+  public get calculateResult(): Observable<OutputParams> {
+    return this._outputSubject$$.asObservable();
   }
 
   // For calculation instructions:
@@ -119,17 +110,17 @@ export class CalculateService {
         }
       }
     }
-    let grossBase = output.taxableYear - output.grossAllowance;
+    output.taxableYear -= output.grossAllowance;
 
-    output.payrollTax = -1 * this.getPayrollTax(input.year, grossBase);
-    output.socialTax = (input.social) ? -1 * this.getSocialTax(input.year, grossBase, input.older) : 0;
+    output.payrollTax = -1 * this.getPayrollTax(input.year, output.taxableYear);
+    output.socialTax = (input.social) ? -1 * this.getSocialTax(input.year, output.taxableYear, input.older) : 0;
     let socialCredit: number = this.getSocialPercent(input.year, input.older, input.social);
-    output.generalCredit = socialCredit * this.getGeneralCredit(input.year, grossBase);
-    output.labourCredit = socialCredit * this.getLabourCredit(input.year, grossBase);
+    output.generalCredit = socialCredit * this.getGeneralCredit(input.year, output.taxableYear);
+    output.labourCredit = socialCredit * this.getLabourCredit(input.year, output.taxableYear);
     output.incomeTax = output.payrollTax + output.socialTax + output.generalCredit + output.labourCredit;
     output.incomeTax = (output.incomeTax < 0) ? output.incomeTax : 0;
 
-    output.netYear = grossBase + output.incomeTax + output.taxFreeYear;
+    output.netYear = output.taxableYear + output.incomeTax + output.taxFreeYear;
 
     if (full) {
       output.grossMonth = grossYear / 12;

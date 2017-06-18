@@ -2,6 +2,7 @@ import {
   Component,
   Input,
   OnInit,
+  OnDestroy,
 } from '@angular/core';
 import {
   trigger,
@@ -11,6 +12,7 @@ import {
   transition,
 } from '@angular/animations';
 import { TranslatePipe } from '@ngx-translate/core';
+import { Subscription } from 'rxjs/Subscription';
 
 import { CalculateService } from './calculate.service';
 import { CONSTANTS } from './calculate.const';
@@ -28,9 +30,9 @@ import { CONSTANTS } from './calculate.const';
     ])
   ]
 })
-export class ContentComponent implements OnInit {
-  
-  private _calculateService: CalculateService;
+export class ContentComponent implements OnInit, OnDestroy {
+
+  private _subscription: Subscription;
 
   public selectedTab = 0;
   public years: number[];
@@ -41,9 +43,7 @@ export class ContentComponent implements OnInit {
   public show: boolean = false;
   public getKeys = Object.keys;
 
-  constructor(_calculateService: CalculateService) {
-    this._calculateService = _calculateService;
-  }
+  constructor(private _calculateService: CalculateService) { }
 
   ngOnInit() {
     this.output = CONSTANTS.default.output;
@@ -59,9 +59,13 @@ export class ContentComponent implements OnInit {
     });
     this.choices = choices;
     this.changeOption(true, this.options.type);
-    this._calculateService.calculateResult.subscribe(results => {
+    this._subscription = this._calculateService.calculateResult.subscribe(results => {
       this.output = results;
     });
+  }
+
+  ngOnDestroy() {
+    this._subscription.unsubscribe();
   }
 
   public rename(str: string): string {

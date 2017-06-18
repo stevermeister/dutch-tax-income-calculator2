@@ -2,7 +2,7 @@
 
 import { EuroPipe } from './euro.pipe';
 
-describe('EuroPipe', () => {
+describe('Pipe: EuroPipe', () => {
   let stubPipe = [ {
       amount: 1234.56,
       field: 'taxableYear',

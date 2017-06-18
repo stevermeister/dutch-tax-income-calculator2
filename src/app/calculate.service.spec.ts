@@ -70,7 +70,7 @@ describe('Service: Calculate', () => {
           "grossHour": 20,
           "taxFreeYear": 0,
           "taxFree": 0,
-          "taxableYear": 42120,
+          "taxableYear": 39000,
           "payrollTax": -5720,
           "socialTax": -9343,
           "generalCredit": 1343,

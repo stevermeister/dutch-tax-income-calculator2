@@ -26,6 +26,7 @@ export const CONSTANTS = {
       "older": false,
       "ruling": "",
       "hours": 40,
+      "truncate": true,
       "output": {
         "grossAllowance": false,
         "grossYear": false,
