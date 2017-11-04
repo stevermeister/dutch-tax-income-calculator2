@@ -1,0 +1,111 @@
+<div class="content">
+  <mat-tab-group [(selectedIndex)]="selectedTab" (selectChange)="changeOption(true, choices[selectedTab])">
+    <mat-tab *ngFor="let choice of choices">
+      <ng-template mat-tab-label>
+        <label matTooltip="{{rename(choice)+'_TITLE'|translate}}" style="cursor: pointer;">{{rename(choice)|translate}}</label>
+      </ng-template>
+      <mat-input-container class="income">
+        <span mat-prefix>€&nbsp;</span>
+        <input matInput type="number" min="1" autofocus required placeholder="{{'SALARY'|translate}}"
+          [(ngModel)]="options.income" (input)="changeOption(false, choice)" align="end">
+        <mat-hint align="end">{{rename(choice)+'_TITLE'|translate}}</mat-hint>
+      </mat-input-container>
+    </mat-tab>
+  </mat-tab-group>
+  <mat-sidenav-container>
+    <button mat-fab matTooltip="{{'OPTIONS'|translate}}" (click)="sidenav.open(); changeOption()">
+      <mat-icon>add</mat-icon>
+    </button>
+    <div class="sidenav-result">
+      <mat-list class="result" *ngIf="output">
+        <mat-list-item [ngClass]="{'hide': !options.output[key]}" *ngFor="let key of getKeys(output)">
+          <label mat-line *ngIf="key == 'taxFree'" [ngClass]="{'value': true, 'positive': output[key] > 0}">
+            {{output[key] | number:0}}%
+          </label>
+          <label mat-line *ngIf="key != 'taxFree'"
+              [ngClass]="{'value': true, 'positive': getPositive(output[key], key), 'negative': output[key] < 0}">
+            {{output[key] | euro:key}}
+          </label>
+          <p mat-line><span>{{'OUTPUT.'+rename(key)|translate}}</span></p>
+        </mat-list-item>
+      </mat-list>
+    </div>
+    <mat-sidenav #sidenav align="start">
+      <mat-list>
+        <mat-list-item class="label">
+          <label mat-line>{{'YEAR'|translate}}:</label>
+        </mat-list-item>
+        <mat-list-item class="item-fill-height">
+          <mat-radio-group [(ngModel)]="options.year" (change)="changeOption()">
+            <mat-radio-button value="{{year}}" *ngFor="let year of years">{{year}}</mat-radio-button>
+          </mat-radio-group>
+        </mat-list-item>
+        <mat-list-item>
+          <mat-checkbox mat-line [(ngModel)]="options.allowance" (change)="changeOption()"
+              aria-label="{{'ALLOWANCE_TITLE'|translate}}" title="{{'ALLOWANCE_TITLE'|translate}}">
+            {{'ALLOWANCE'|translate}}
+          </mat-checkbox>
+        </mat-list-item>
+        <mat-list-item>
+          <mat-checkbox mat-line [(ngModel)]="options.social" (change)="changeOption()"
+              aria-label="{{'SOCIAL_TITLE'|translate}}" title="{{'SOCIAL_TITLE'|translate}}">
+            {{'SOCIAL'|translate}}
+          </mat-checkbox>
+        </mat-list-item>
+        <mat-list-item>
+          <mat-checkbox mat-line [(ngModel)]="options.older" (change)="changeOption()"
+              aria-label="{{'OLDER_TITLE'|translate}}" title="{{'OLDER_TITLE'|translate}}">
+            {{'OLDER'|translate}}
+          </mat-checkbox>
+        </mat-list-item>
+        <mat-list-item>
+          <mat-checkbox mat-line [(ngModel)]="ruling" (change)="changeOption(true)"
+              aria-label="{{'RULING_TITLE'|translate}}" title="{{'RULING_TITLE'|translate}}">
+            {{'RULING'|translate}}
+          </mat-checkbox>
+        </mat-list-item>
+        <mat-list-item class="item-fill-height">
+          <mat-radio-group [(ngModel)]="options.ruling" [disabled]="!ruling" (change)="changeOption()">
+            <mat-radio-button value="research" aria-label="{{'RESEARCH_TITLE'|translate}}" title="{{'RESEARCH_TITLE'|translate}}">
+              {{'RESEARCH'|translate}}
+            </mat-radio-button>
+            <mat-radio-button value="young" aria-label="{{'YOUNG_TITLE'|translate}}" title="{{'YOUNG_TITLE'|translate}}">
+              {{'YOUNG'|translate}}
+            </mat-radio-button>
+            <mat-radio-button value="normal" aria-label="{{'NORMAL_TITLE'|translate}}" title="{{'NORMAL_TITLE'|translate}}">
+              {{'NORMAL'|translate}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </mat-list-item>
+      </mat-list>
+      <div class="collapsible-item">
+        <mat-toolbar class="collapsible-heading" (click)="show = !show"
+            [ngClass]="{'collapsed': !show, 'expanded': show}">
+          <button mat-icon-button type="button" aria-hidden="false" title="{{'EXPAND'|translate}}">
+            <mat-icon *ngIf="!show">expand_more</mat-icon>
+            <mat-icon *ngIf="show">expand_less</mat-icon>
+          </button>
+          <label>{{'ADVANCED'|translate}}</label>
+        </mat-toolbar>
+        <div class="slide-down" [@slideDown]="show ? 'void' : 'up'">
+          <mat-list class="collapsible-content">
+            <mat-list-item>
+              <mat-input-container mat-line>
+                <input matInput type="number" min="1" max="100" placeholder="{{'HOURS'|translate}}"
+                  [(ngModel)]="options.hours" (input)="changeOption()" align="end">
+              </mat-input-container>
+            </mat-list-item>
+            <mat-list-item class="label">
+              <label mat-line>{{'DISPLAY'|translate}}:</label>
+            </mat-list-item>
+            <mat-list-item *ngFor="let key of getKeys(options.output)">
+              <mat-checkbox mat-line class="options" [(ngModel)]="options.output[key]" (change)="changeOption()">
+                {{'OUTPUT.'+rename(key)|translate}}
+              </mat-checkbox>
+            </mat-list-item>
+          </mat-list>
+        </div>
+      </div>
+    </mat-sidenav>
+  </mat-sidenav-container>
+<div>

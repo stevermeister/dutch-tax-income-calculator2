@@ -1,0 +1,22 @@
+<mat-card>
+  <mat-card-title>{{'DISCLAIMER'|translate}}</mat-card-title>
+  <mat-card-content class="disclaimer">
+    <p>{{'DISCLAIMER_DESC'|translate}}</p>
+  </mat-card-content>
+</mat-card>
+
+<mat-card>
+  <mat-card-title>{{'RULING'|translate}}</mat-card-title>
+  <mat-card-content>
+    <p>{{'RULING_DESC'|translate}}{{year}}:<br></p>
+    <ul>
+      <li>{{'RESEARCH_DESC'|translate}}</li>
+      <li>{{'YOUNG_DESC'|translate}}
+        <b>{{ruling[year].young | currency:'EUR':true:'1.0-0'}}</b> ({{year - 1}}: {{ruling[year - 1].young | currency:'EUR':true:'1.0-0'}}).
+      </li>
+      <li>{{'NORMAL_DESC'|translate}}
+        <b>{{ruling[year].normal | currency:'EUR':true:'1.0-0'}}</b> ({{year - 1}}: {{ruling[year - 1].normal | currency:'EUR':true:'1.0-0'}}).
+      </li>
+    </ul>
+  </mat-card-content>
+</mat-card>

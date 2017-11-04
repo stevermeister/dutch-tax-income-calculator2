@@ -1,0 +1,94 @@
+mat-input-container {
+  width: 100%;
+  &.income {
+    width: 50%;
+    font-size: 30px;
+    margin-top: 20px;
+    margin-left: 20px;
+  }
+  .mat-hint {
+    font-size: 60%;
+  }
+}
+
+mat-sidenav-container {
+  height: 650px;
+  margin: 5px 1vw;
+  .mat-fab {
+    position: fixed;
+    left: 20px;
+    top: 10px;
+    z-index: 2;
+    transform: translateZ(0);
+  }
+  .sidenav-result {
+    display: flex;
+    padding: 20px;
+    align-items: right;
+    justify-content: right;
+    float: right;
+    text-align: right;
+    .result {
+      font-weight: bold;
+      color: grey;
+      .value {
+        color: black;
+      }
+      .positive {
+        color: #3366ff;
+      }
+      .negative {
+        color: #FF3366;;
+      }
+    }
+  }
+  .mat-sidenav {
+    max-width: 70vw;
+    .mat-radio-group {
+      margin-left: 10px;
+    }
+    .mat-radio-button {
+      margin: 10px;
+      display: block;
+    }
+    .options {
+      font-size: 12px !important;
+    }
+    .label {
+      height: 40px;
+    }
+    .collapsible-item {
+      overflow: hidden;
+      .collapsible-heading {
+        cursor: pointer;
+        position: relative;
+        z-index: 100000000;
+        background: rgba(245, 245, 245, .9);
+        min-height: initial;
+        height: 40px;
+        margin: 4px 0;
+        &:focus {
+          outline: none;
+          border: 0;
+        }
+        label {
+          cursor: pointer;
+          font-size: 16px;
+          margin: 0px;
+        }
+        &.collapsed label {
+          font-weight: normal;
+        }
+        &.expanded label {
+          font-weight: bold;
+        }
+      }
+      .slide-down {
+        height: 100%;
+        overflow: hidden;
+        position: relative;
+        display: block !important;
+      }
+    }
+  }
+}
